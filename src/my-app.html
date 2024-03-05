@@ -82,28 +82,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <app-drawer-layout fullbleed narrow="{{narrow}}" responsive-width="0" style="height: 100vh;">
       <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]" opened="{{drawerOpened}}">
-          <app-toolbar>Menu</app-toolbar>
-          <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-              <a name="my-registration" href="[[rootPath]]my-registration">my-registration</a>
-              <a name="user" href="[[rootPath]]user">User</a>
-              <a name="settings" href="[[rootPath]]settings">Settings</a>
-          </iron-selector>
+        <app-toolbar>Menu</app-toolbar>
+        <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
+          <a name="my-registration" href="[[rootPath]]">My Registration</a>
+          <a name="user" href="[[rootPath]]user">User</a>
+          <a name="settings" href="[[rootPath]]settings">Settings</a>
+        </iron-selector>
       </app-drawer>
       <!-- Main content -->
       <app-header-layout has-scrolling-region>
-          <app-header slot="header" condenses reveals effects="waterfall">
-              <app-toolbar>
-                  <paper-icon-button icon="my-icons:menu" on-tap="_toggleDrawer"></paper-icon-button>
-                  <div main-title>Dashboard Anton</div>
-              </app-toolbar>
-          </app-header>
-          <iron-pages selected="[[page]]" attr-for-selected="name">
-              <my-registration name="my-registration"></my-registration>
-              <my-user name="user"></my-user>
-              <my-settings name="settings"></my-settings>
-          </iron-pages>
+        <app-header slot="header" condenses reveals effects="waterfall">
+          <app-toolbar>
+            <paper-icon-button icon="my-icons:menu" on-tap="_toggleDrawer"></paper-icon-button>
+            <div main-title>[[pageTitle]]</div>
+          </app-toolbar>
+        </app-header>        
+        <iron-pages selected="[[page]]" attr-for-selected="name">
+          <my-registration name="my-registration"></my-registration>
+          <my-user name="user"></my-user>
+          <my-settings name="settings"></my-settings>
+        </iron-pages>
       </app-header-layout>
-  </app-drawer-layout>
+    </app-drawer-layout>
+    
   
   </template>
 
@@ -122,7 +123,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     },
     routeData: Object,
     subroute: Object,
-    rootPath: String
+    rootPath: String,
+    pageTitle: {
+      type: String,
+      value: 'Dashboard Anton' // Judul default
+    }
   },
   observers: ['_routePageChanged(routeData.page)'],
 
@@ -134,6 +139,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     this.page = page || 'view1';
     if (!this.$.drawer.persistent) {
       this.$.drawer.close();
+    }
+    // Set judul berdasarkan halaman
+    switch (page) {
+      case 'my-registration':
+        this.pageTitle = 'My Registration';
+        break;
+      case 'user':
+        this.pageTitle = 'User';
+        break;
+      case 'settings':
+        this.pageTitle = 'Settings';
+        break;
+      default:
+        this.pageTitle = 'Dashboard Anton';
     }
   },
 

@@ -3,14 +3,12 @@
 
 <dom-module id="my-registration">
   <template>
-    <style>
-      
-    </style>
+    <style></style>
     <h1>Halaman Registrasi</h1>
-    <p>Nama: <input type="text" id="name" value="{{name::input}}" /></p>
-    <p>NPM: <input type="text" id="npm" value="{{npm::input}}" /></p>
-    <p>Kelas: <input type="text" id="class" value="{{kelas::input}}" /></p>
-    <button on-click="register">Registrasi</button>
+    <p>Nama: <input type="text" id="nameInput" value="{{name::input}}" /></p>
+    <p>NPM: <input type="text" id="npmInput" value="{{npm::input}}" /></p>
+    <p>Kelas: <input type="text" id="classInput" value="{{kelas::input}}" /></p>
+    <button on-click="handleRegistration">Registrasi</button>
   </template>
 
   <script>
@@ -18,7 +16,6 @@
       static get is() {
         return "my-registration";
       }
-
       static get properties() {
         return {
           name: {
@@ -36,7 +33,7 @@
         };
       }
 
-      register() {
+      handleRegistration() {
         // Implementasi logika registrasi
         console.log("Registrasi...");
         console.log("Nama: " + this.name);
